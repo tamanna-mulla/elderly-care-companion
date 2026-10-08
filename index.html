@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Elderly Care Companion - a simple elderly-friendly health and medicine companion demo">
+  <title>Elderly Care Companion</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main id="app">
+    <section id="authScreen" class="screen">
+      <div class="brand">
+        <div class="brand-icon">♥</div>
+        <h1>Elderly Care<br>Companion</h1>
+        <p>Simple support for medicines, hydration, wellbeing and emergencies.</p>
+      </div>
+      <div class="card auth-card">
+        <div class="tabs">
+          <button class="tab active" data-auth="login">Login</button>
+          <button class="tab" data-auth="register">Register</button>
+        </div>
+        <div id="nameField" class="field hidden"><label>Your name</label><input id="nameInput" type="text" placeholder="Enter your name"></div>
+        <div class="field"><label>Mobile number</label><input id="phoneInput" inputmode="numeric" maxlength="10" placeholder="10-digit mobile number"></div>
+        <div class="field"><label>4-digit PIN</label><input id="pinInput" type="password" inputmode="numeric" maxlength="4" placeholder="Enter PIN"></div>
+        <div id="authError" class="error"></div>
+        <button id="authBtn" class="primary">Login</button>
+        <div class="or"><span>OR</span></div>
+        <button id="googleBtn" class="secondary">Continue With Google</button>
+        <p class="small center">Demo application — no real account is created.</p>
+      </div>
+    </section>
+
+    <section id="appScreen" class="hidden app-shell">
+      <header class="topbar">
+        <div><span class="eyebrow">ELDERLY CARE</span><h1>Companion</h1></div>
+        <button id="logoutBtn" class="icon-btn" title="Log out">↪</button>
+      </header>
+
+      <div class="content">
+        <section id="homeView" class="view active-view">
+          <div class="greeting"><h2 id="greeting">Good evening</h2><p id="userGreeting">Here is your care summary for today.</p></div>
+          <div class="stats">
+            <div class="stat"><span>Medicines</span><strong id="statMeds">0/0</strong></div>
+            <div class="stat"><span>Water</span><strong id="statWater">0/8</strong></div>
+            <div class="stat"><span>Feeling</span><strong id="statFeeling">—</strong></div>
+          </div>
+          <div class="card insight"><div class="card-title"><span>✨</span><h3>Care Insight</h3></div><p id="insightText"></p><button class="text-btn" data-view="chat">Ask the care assistant →</button></div>
+          <div class="card"><div class="card-title"><span>💊</span><h3>Today's medicines</h3></div><div id="medicineProgress" class="small muted"></div><div class="progress"><i id="medicineBar"></i></div><div id="todayMedicineList" class="list"></div></div>
+          <div class="card"><div class="card-title"><span>🙂</span><h3>How are you feeling?</h3></div><div class="feeling-buttons"><button data-feeling="Good" class="good">Good</button><button data-feeling="Okay" class="secondary">Okay</button><button data-feeling="Not well" class="danger">Not well</button></div><p id="feelingMessage" class="muted"></p></div>
+          <div class="card"><div class="card-title"><span>💧</span><h3>Water today</h3></div><div class="water-control"><button id="waterMinus" class="round">−</button><strong id="waterText">0 of 8 glasses</strong><button id="waterPlus" class="primary small-btn">+ Glass</button></div></div>
+        </section>
+
+        <section id="medsView" class="view">
+          <div class="page-heading"><h2>Medicine Reminders</h2><p>Add and track your daily medicines.</p></div>
+          <div class="card"><h3>Add reminder</h3><div class="field"><label>Medicine name</label><input id="medicineName" placeholder="e.g. BP tablet"></div><div class="field"><label>Dosage</label><input id="medicineDose" placeholder="e.g. 1 tablet"></div><div class="field"><label>Time</label><input id="medicineTime" type="time"></div><button id="addMedicine" class="primary">Save Reminder</button><div id="medicineMsg" class="success"></div></div>
+          <div class="card"><h3>Saved reminders</h3><div id="allMedicineList" class="list"></div></div>
+        </section>
+
+        <section id="chatView" class="view">
+          <div class="page-heading"><h2>AI Care Assistant</h2><p>Simple general health information — not a doctor.</p></div>
+          <div class="card chat-card"><div id="chatLog" class="chat-log"><div class="bubble bot">Hello! Ask me about medicines, food, sleep, exercise, hydration or general wellbeing.</div></div><div class="chat-input"><input id="chatInput" placeholder="Type your question..."><button id="sendChat" class="primary small-btn">Send</button></div><div class="quick-actions"><button class="secondary" data-question="What should I eat today?">Food</button><button class="secondary" data-question="Tips for better sleep">Sleep</button><button class="secondary" data-question="Why do my knees hurt?">Pain</button><button class="secondary" data-question="How much water should I drink?">Water</button></div></div>
+          <div class="warning">For serious symptoms such as chest pain, breathing trouble, stroke signs, fainting or severe bleeding, call <strong>112</strong> or use SOS.</div>
+        </section>
+
+        <section id="sosView" class="view">
+          <div class="page-heading"><h2>Emergency SOS</h2><p>Use this demo to simulate alerting a family contact.</p></div>
+          <a href="tel:112" class="danger call-btn">☎ Call 112 now</a>
+          <div class="card sos-card"><button id="sosButton" class="sos">SOS</button><p><strong>Press the button to send an emergency alert.</strong></p><p class="small muted">This project simulates the alert. It does not actually notify emergency services.</p><div id="sosStatus" class="success"></div></div>
+          <div class="card"><h3>Family contact</h3><div class="field"><label>Name</label><input id="familyName" placeholder="Family member"></div><div class="field"><label>Mobile number</label><input id="familyPhone" inputmode="numeric" maxlength="10" placeholder="10-digit number"></div><button id="saveFamily" class="primary">Save Contact</button><div id="familyMsg" class="success"></div></div>
+        </section>
+
+        <section id="alertsView" class="view">
+          <div class="page-heading"><h2>Alerts</h2><p>Missed medicines and emergency activity.</p></div>
+          <div id="alertsList"></div>
+        </section>
+      </div>
+
+      <nav class="bottom-nav">
+        <button class="nav-item active" data-view="home">⌂<span>Home</span></button>
+        <button class="nav-item" data-view="meds">💊<span>Medicines</span></button>
+        <button class="nav-item" data-view="chat">💬<span>Assistant</span></button>
+        <button class="nav-item" data-view="sos">🆘<span>SOS</span></button>
+        <button class="nav-item" data-view="alerts">🔔<span>Alerts</span><b id="alertBadge" class="badge hidden">0</b></button>
+      </nav>
+    </section>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
