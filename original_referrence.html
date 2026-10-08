@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Elderly Care Companion</title>
+<style>
+:root{--fs:18px;--bg:#fff;--card:#fff;--tx:#1b2559;--mu:#5b6478;--bd:#cbd5e1;--pri:#2563eb;--on:#fff;--ok:#16803c;--er:#dc2626;--wa:#f59e0b;--soft:#f1f5f9;box-sizing:border-box}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1621;--card:#17222f;--tx:#f1f5f9;--mu:#b6c2d1;--bd:#475569;--pri:#6ea0ff;--on:#06143a;--ok:#4cc38a;--er:#ff8a7a;--soft:#1f2c3b}}
+:root[data-theme="dark"]{--bg:#0e1621;--card:#17222f;--tx:#f1f5f9;--mu:#b6c2d1;--bd:#475569;--pri:#6ea0ff;--on:#06143a;--ok:#4cc38a;--er:#ff8a7a;--soft:#1f2c3b}
+*{box-sizing:border-box}html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--tx);font:var(--fs)/1.4 Arial,'Helvetica Neue',sans-serif}
+#app{position:relative;max-width:430px;height:100%;margin:0 auto;display:flex;flex-direction:column;background:var(--bg);overflow:hidden}
+.notch{display:none}
+@media (min-width:600px){body{height:auto;padding:24px 0;background:var(--soft)}#app{height:min(860px,calc(100vh - 48px));border:10px solid #111;border-radius:46px;box-shadow:0 8px 30px rgba(0,0,0,.25)}.notch{display:block;position:absolute;top:8px;left:50%;width:110px;height:22px;margin-left:-55px;background:#111;border-radius:12px;z-index:6}.scr{padding-top:22px}}
+.scr{flex:1;overflow:auto;padding:16px 16px 20px;padding-top:max(16px,env(safe-area-inset-top,0px))}
+#home{flex:1;min-height:0;display:flex;flex-direction:column}
+h1{font-size:1.6em;text-align:center;margin:10px 0 14px;font-weight:700}h2{font-size:1.1em;margin:0 0 8px}
+.brand{font-size:1.9em;margin-top:30px}
+.card{background:var(--card);border:1.5px solid var(--bd);border-radius:14px;padding:14px;margin-bottom:12px}
+.dash{border-style:dashed}
+.tabs{display:flex;border-bottom:1.5px solid var(--bd);margin-bottom:12px}.tab{flex:1;background:none;border:0;border-bottom:3px solid transparent;border-radius:0;color:var(--mu);min-height:46px;font-size:1.05em}.tab.on{color:var(--tx);border-bottom-color:var(--tx)}
+.fld{display:flex;align-items:center;gap:8px;border:1.5px solid var(--bd);border-radius:10px;padding:0 12px;background:var(--card);margin-top:10px}.fld input{border:0;background:none;padding:12px 0;min-height:50px}.fld:focus-within{border-color:var(--pri)}.fld.bad{border-color:var(--er)}
+.fld button{width:auto;min-height:40px;padding:4px;border:0;background:none;color:var(--mu)}
+input{width:100%;font:inherit;color:var(--tx);background:var(--card);border:1.5px solid var(--bd);border-radius:10px;padding:12px;min-height:50px}
+.fld input:focus-visible{outline:none}
+input.bad{border-color:var(--er)}
+.msg{color:var(--er);font-weight:700;font-size:.85em;min-height:1.2em}.msg.ok{color:var(--ok)}
+.ic,.nav svg,.tri{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.tri{width:34px;height:34px}
+button,.btn{font:inherit;font-weight:700;min-height:52px;padding:10px 16px;border-radius:10px;border:1.5px solid var(--pri);background:var(--pri);color:var(--on);width:100%;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;text-decoration:none}
+.alt{background:var(--card);color:var(--pri)}.good{background:var(--ok);border-color:var(--ok);color:#fff}.danger{background:var(--er);border-color:var(--er);color:#fff}
+.sm{width:auto;min-height:44px;padding:6px 12px}
+button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--wa);outline-offset:2px}
+button:disabled{opacity:.75}
+.sp{display:inline-block;width:1em;height:1em;border:3px solid currentColor;border-top-color:transparent;border-radius:50%;animation:s 1s linear infinite;vertical-align:middle}
+@keyframes s{to{transform:rotate(360deg)}}@keyframes pl{50%{transform:scale(1.1);opacity:.75}}
+@media (prefers-reduced-motion:reduce){.sp,.pulse{animation:none}}
+.row{display:flex;gap:10px;align-items:center;justify-content:space-between}
+.or{display:flex;align-items:center;gap:10px;color:var(--mu);margin:12px 0}.or:before,.or:after{content:"";flex:1;border-top:1.5px solid var(--bd)}
+.kp{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}.kp div{border:1.5px solid var(--bd);border-radius:12px;padding:10px 6px;text-align:center;font-size:.8em;color:var(--mu)}.kp b{display:block;font-size:1.4em;color:var(--tx)}
+.med{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:10px 0;border-top:1px solid var(--bd)}.med:first-child{border-top:0}.med b{display:block}.mu{color:var(--mu)}.done{color:var(--ok);font-weight:700}
+table{width:100%;border-collapse:collapse;font-size:.85em}th,td{border:1.5px solid var(--bd);padding:6px;text-align:left}th{background:var(--soft)}
+.pb{height:16px;border-radius:8px;background:var(--soft);border:1.5px solid var(--bd);overflow:hidden}.pb i{display:block;height:100%;background:var(--ok);width:0;transition:width .3s}
+#mpb{background:var(--pri);border-color:var(--pri);height:22px}#mpb i{background:#fff}
+.al{display:flex;gap:10px;align-items:center}
+.nav{display:flex;border-top:1.5px solid var(--bd);background:var(--card);padding-bottom:env(safe-area-inset-bottom,0px)}
+.nav button{border:0;border-radius:0;background:transparent;color:var(--mu);flex:1;font-size:.65em;min-height:58px;padding:6px 2px;flex-direction:column;gap:2px;position:relative}
+.nav button[aria-current="page"]{color:var(--pri);box-shadow:inset 0 3px 0 var(--pri)}
+.bdg{background:var(--er);color:#fff;border-radius:10px;font-size:11px;padding:0 6px;position:absolute;top:4px;right:10px}
+.sosbtn{width:190px;height:190px;border-radius:50%;font-size:2.4em;margin:12px auto;touch-action:none;user-select:none;-webkit-user-select:none}
+.big{display:flex;align-items:center;justify-content:center;border-radius:50%;width:190px;height:190px;margin:12px auto;font-size:3em;color:#fff;background:var(--er)}
+.pulse{animation:pl 1.4s ease-in-out infinite}
+#log{max-height:42vh;overflow:auto}
+.bub{padding:10px 12px;border-radius:14px;margin:8px 0;max-width:94%;white-space:pre-wrap;overflow-wrap:anywhere}
+.me{background:var(--pri);color:var(--on);margin-left:auto}.bot{background:var(--soft);border:1.5px solid var(--bd)}
+.warn{background:var(--card);border:3px solid var(--er);max-width:100%}
+.chips{display:grid;grid-template-columns:1fr 1fr;gap:8px}.chips button{font-size:.85em;min-height:46px}
+.toast{position:fixed;left:12px;right:12px;top:calc(12px + env(safe-area-inset-top,0px));max-width:400px;margin:0 auto;background:var(--wa);color:#000;padding:12px;border-radius:12px;font-weight:700;z-index:9}
+[hidden]{display:none!important}
+
+</style>
+</head>
+<body>
+<div id="app">
+<div class="notch"></div>
+<div class="scr" id="login">
+  <h1 class="brand">Elderly Care<br>Companion</h1>
+  <div class="card">
+    <div class="tabs"><button class="tab on" data-tab="login">Login</button><button class="tab" data-tab="reg">Register</button></div>
+    <div id="nmw" hidden><div class="fld" id="nmf"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg><input id="nm" aria-label="Your name" placeholder="Your name" autocomplete="given-name"></div><div class="msg" id="nme" role="alert"></div></div>
+    <div class="fld"><svg class="ic" viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg><input id="ph" aria-label="Mobile number" inputmode="numeric" autocomplete="tel" placeholder="Mobile number"></div><div class="msg" id="pe" role="alert"></div>
+    <div class="fld"><svg class="ic" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><input id="pin" type="password" aria-label="4-digit PIN" inputmode="numeric" maxlength="4" placeholder="4-digit PIN"><button id="eye" aria-label="Show or hide PIN"><svg class="ic" viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button></div><div class="msg" id="ne" role="alert"></div>
+    <div class="row" style="margin:6px 0 12px"><label style="display:flex;gap:6px;align-items:center;font-size:.85em"><input type="checkbox" style="width:18px;min-height:0"> Remember Me</label><button class="sm alt" id="forgot" style="border:0;background:none;font-size:.85em;min-height:36px">Forgot PIN?</button></div>
+    <button id="lg">Login</button>
+    <div class="or">OR</div>
+    <button class="alt" id="goog" style="color:var(--tx);border-color:var(--bd)"><b style="color:#ea4335">G</b> Continue With Google</button>
+    <p class="mu" style="text-align:center;font-size:.85em">Don't have an account? <button class="sm alt" id="toReg" style="display:inline;border:0;background:none;min-height:30px;padding:0;width:auto;font-size:1em">Register</button></p>
+  </div>
+</div>
+
+<div id="home" hidden>
+<div class="scr">
+  <section id="v-home">
+    <h1>Elderly Care Companion</h1>
+    <div class="mu" id="hi" style="text-align:center;margin:-8px 0 12px"></div>
+    <div class="kp"><div>Medicines<b id="k1"></b></div><div>Water<b id="k2"></b></div><div>Feeling<b id="k3"></b></div></div>
+    <div class="card"><h2>AI Generated Insight</h2><div id="insight"></div><button class="alt" data-go="chat" style="margin-top:10px">Ask a health question</button></div>
+    <div class="card"><h2>Today's medicines</h2><div id="prog" class="mu"></div><div class="pb" aria-hidden="true"><i id="pbar"></i></div><div id="todayList" style="margin-top:6px"></div></div>
+    <div class="card"><h2>How are you feeling?</h2><div class="row" style="flex-wrap:wrap"><button class="good sm" data-feel="good">Good</button><button class="alt sm" data-feel="okay">Okay</button><button class="danger sm" data-feel="bad">Not well</button></div><div id="feel" class="mu" style="margin-top:8px"></div></div>
+    <div class="card"><h2>Water today</h2><div class="row"><button class="alt sm" id="wm" aria-label="Remove a glass">-</button><b id="wt"></b><button class="sm" id="wp" aria-label="Add a glass">+ Glass</button></div></div>
+    <div class="card"><div class="row"><b>Text size</b><span style="display:flex;gap:8px"><button class="alt sm" id="fm" aria-label="Smaller text">A-</button><button class="alt sm" id="fp" aria-label="Larger text">A+</button></span></div></div>
+    <button class="alt" id="out">Log out</button>
+  </section>
+
+  <section id="v-meds" hidden>
+    <h1>Medicine Reminders</h1>
+    <div class="card dash"><h2>Add reminder</h2>
+      <input id="mn" aria-label="Medicine name" placeholder="Medicine name"><div class="msg" id="mne" role="alert"></div>
+      <input id="md" aria-label="Dosage" placeholder="Dosage, e.g. 1 tablet"><div class="msg" id="mde" role="alert"></div>
+      <input id="mt" type="time" aria-label="Time"><div class="msg" id="mte" role="alert"></div>
+      <button id="ms">Save Reminder</button>
+      <div class="pb" id="mpb" hidden style="margin-top:12px"><i id="mpi"></i></div>
+      <div class="msg" id="mpt" style="text-align:center;color:var(--pri)"></div>
+      <div class="msg ok" id="mok" role="status" style="text-align:center"></div>
+    </div>
+    <div class="card"><h2>Saved Reminders</h2><div id="allList"></div></div>
+  </section>
+
+  <section id="v-chat" hidden>
+    <h1>AI Care Assistant</h1>
+    <div class="card"><div class="row"><input id="ci" aria-label="Your question" placeholder="Ask anything about your health..." style="flex:1"><button class="sm" id="cs">Send</button></div>
+      <div class="row" style="margin-top:8px"><button class="alt sm" id="mic">Speak</button><label style="display:flex;gap:6px;align-items:center;font-size:.85em"><input type="checkbox" id="rd" style="width:18px;min-height:0"> Read aloud</label></div></div>
+    <div class="card"><h2>AI Generated Insight</h2><div id="log" aria-live="polite"><div class="bub bot">Hello! Ask me about your health, food, sleep, exercise or medicines. I will answer in simple words.</div></div><p class="mu" style="font-size:.8em;margin:6px 0 0">General information only, not a doctor. For serious symptoms call 112.</p></div>
+    <div class="card"><h2>Quick Actions</h2><div class="chips" id="chips"></div></div>
+  </section>
+
+  <section id="v-sos" hidden>
+    <h1>Emergency</h1>
+    <a class="btn danger" href="tel:112" style="margin-bottom:12px">Call 112 now</a>
+    <div class="card" style="text-align:center">
+      <div id="sIdle"><button class="sosbtn danger" id="sos" aria-label="SOS. Press and hold for 3 seconds">SOS</button><b>Press and hold for 3 seconds</b><div class="pb" style="margin:12px 0"><i id="hold" style="background:var(--er)"></i></div><button class="alt" id="sosNow">Or tap here to send SOS now</button></div>
+      <div id="sLoad" hidden role="status"><div class="big pulse"><span class="sp" style="width:60px;height:60px;border-width:6px"></span></div><b>Alerting your family...</b><div id="steps" style="text-align:left;margin-top:10px"></div></div>
+      <div id="sDone" hidden role="status"><div class="big" style="background:var(--ok)">&#10003;</div><h2 class="done">Family Notified</h2><div>Help is on the way</div><button class="alt" id="sosAgain" style="margin-top:12px">Back</button></div>
+      <p class="mu" style="font-size:.8em">Demo: the alert is simulated. In a real emergency call 112.</p>
+    </div>
+    <div class="card"><h2>Family contact</h2>
+      <input id="fn" aria-label="Family member name" placeholder="Name"><input id="fp2" aria-label="Family mobile number" inputmode="numeric" placeholder="Mobile number" style="margin-top:8px"><div class="msg" id="fe" role="alert"></div>
+      <button id="fs">Save contact</button><a class="btn good" id="fc" href="#" hidden style="margin-top:10px">Call family</a>
+    </div>
+  </section>
+
+  <section id="v-alerts" hidden><h1>Alerts</h1><div id="alist"></div></section>
+</div>
+<div class="nav" role="navigation" aria-label="Main">
+  <button data-go="home" aria-current="page"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 10v10h14V10M10 20v-6h4v6"/></svg>Home</button>
+  <button data-go="meds"><svg viewBox="0 0 24 24"><rect x="2" y="8" width="20" height="8" rx="4" transform="rotate(-45 12 12)"/><path d="M9 15l6-6"/></svg>Medicines</button>
+  <button data-go="chat"><svg viewBox="0 0 24 24"><path d="M4 4h16v12H9l-5 4z"/></svg>AI</button>
+  <button data-go="sos"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M7 12h10"/></svg>SOS</button>
+  <button data-go="alerts"><svg viewBox="0 0 24 24"><path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4zM10 21h4"/></svg>Alerts<span class="bdg" id="bdg" hidden></span></button>
+</div>
+</div>
+<div class="toast" id="toast" role="alert" hidden></div>
+</div>
+<script>
+(function(){
+var $=function(s){return document.querySelector(s)},$$=function(s){return document.querySelectorAll(s)};
+var day=new Date().toDateString();
+var S={user:null,name:'',day:day,fs:20,water:0,feel:'',fam:{n:'',p:''},meds:[{id:1,name:'BP tablet',dose:'1 tablet',time:'08:00',taken:false},{id:2,name:'Vitamin D',dose:'1 capsule',time:'13:00',taken:false}],log:[],dis:[]};
+try{var r=JSON.parse(localStorage.getItem('ecc2')||'null');if(r){S=Object.assign(S,r);if(r.day!==day){S.day=day;S.log=[];S.dis=[];S.water=0;S.feel='';S.meds.forEach(function(m){m.taken=false})}}}catch(e){}
+function save(){try{localStorage.setItem('ecc2',JSON.stringify(S))}catch(e){}}
+function esc(t){var d=document.createElement('div');d.textContent=t;return d.innerHTML}
+function pad(n){return (n<10?'0':'')+n}
+function hm(){var d=new Date();return pad(d.getHours())+':'+pad(d.getMinutes())}
+function t12(t){var p=t.split(':'),h=+p[0];return ((h%12)||12)+':'+p[1]+(h<12?' AM':' PM')}
+function sorted(){return S.meds.slice().sort(function(a,b){return a.time<b.time?-1:1})}
+function toast(t){var e=$('#toast');e.textContent=t;e.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(function(){e.hidden=true},8000)}
+function speak(t){try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t);u.rate=.9;speechSynthesis.speak(u)}catch(e){}}
+function setFs(){document.documentElement.style.setProperty('--fs',S.fs+'px')}
+setFs();
+
+/* login */
+function chk(){var n=$('#nm').value.trim(),p=$('#ph').value.replace(/\s/g,''),k=$('#pin').value;
+ var a=(reg&&!n)?'Please enter your name':'',b=!p?'Please enter your mobile number':!/^\d{10}$/.test(p)?'Enter a valid 10-digit number':'',c=!k?'Please enter your PIN':!/^\d{4}$/.test(k)?'PIN must be 4 digits':'';
+ $('#nme').textContent=a;$('#nm').classList.toggle('bad',!!a);$('#pe').textContent=b;$('#ph').classList.toggle('bad',!!b);$('#ne').textContent=c;$('#pin').classList.toggle('bad',!!c);return !a&&!b&&!c}
+var touched=false;
+['#nm','#ph','#pin'].forEach(function(s){$(s).oninput=function(){if(touched)chk()}});
+$('#lg').onclick=function(){touched=true;if(!chk())return;var b=this;b.disabled=true;b.innerHTML='<span class="sp"></span> Logging In...';
+ setTimeout(function(){b.className='good';b.innerHTML='&#10003; '+(reg?'Account Created':'Login Successful');
+  setTimeout(function(){S.user=$('#ph').value.replace(/\s/g,'');S.name=$('#nm').value.trim()||S.name;save();b.disabled=false;b.className='';b.textContent=reg?'Register':'Login';enter()},800)},1200)};
+$('#out').onclick=function(){S.user=null;save();$('#home').hidden=true;$('#login').hidden=false;$('#pin').value='';touched=false;['#nme','#pe','#ne'].forEach(function(s){$(s).textContent=''})};
+function enter(){$('#login').hidden=true;$('#home').hidden=false;go('home')}
+
+/* nav */
+function go(v){['home','meds','chat','sos','alerts'].forEach(function(x){$('#v-'+x).hidden=x!==v});
+ $$('.nav button').forEach(function(b){if(b.dataset.go===v)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});draw();$('.scr:not([hidden])').scrollTop=0}
+document.addEventListener('click',function(e){
+ var g=e.target.closest('[data-go]');if(g){go(g.dataset.go);return}
+ var t=e.target.closest('[data-take]'),d=e.target.closest('[data-del]'),f=e.target.closest('[data-feel]'),x=e.target.closest('[data-dis]');
+ if(t){S.meds.forEach(function(m){if(m.id==t.dataset.take)m.taken=true});save();draw()}
+ if(d){S.meds=S.meds.filter(function(m){return m.id!=d.dataset.del});save();draw()}
+ if(x){S.dis.push(x.dataset.dis+day);save();alerts()}
+ if(f){S.feel=f.dataset.feel;save();draw();if(S.feel==='bad'){go('chat');ask('I am not feeling well today.')}}});
+$('#fp').onclick=function(){S.fs=Math.min(30,S.fs+2);setFs();save()};$('#fm').onclick=function(){S.fs=Math.max(16,S.fs-2);setFs();save()};
+$('#wp').onclick=function(){S.water=Math.min(20,S.water+1);save();draw()};$('#wm').onclick=function(){S.water=Math.max(0,S.water-1);save();draw()};
+
+/* draw */
+function medRow(m,del){return '<div class="med"><div><b>'+esc(m.name)+'</b><span class="mu">'+esc(m.dose)+' &middot; '+t12(m.time)+'</span></div>'+
+ (del?'<button class="alt sm" data-del="'+m.id+'" aria-label="Delete '+esc(m.name)+'">Delete</button>':(m.taken?'<span class="done">&#10003; Taken</span>':'<button class="good sm" data-take="'+m.id+'">Taken</button>'))+'</div>'}
+function draw(){
+ var h=new Date().getHours();$('#hi').textContent=(h<12?'Good morning':h<17?'Good afternoon':'Good evening')+(S.name?', '+S.name:'');
+ var l=sorted(),t=l.filter(function(m){return m.taken}).length;
+ $('#prog').textContent=l.length?t+' of '+l.length+' taken':'No reminders yet';$('#pbar').style.width=(l.length?100*t/l.length:0)+'%';
+ $('#todayList').innerHTML=l.map(function(m){return medRow(m,false)}).join('')||'<span class="mu">Add a reminder in Medicines.</span>';
+ $('#allList').innerHTML=l.length?'<table><tr><th>Medicine</th><th>Dose</th><th>Time</th><th>Action</th></tr>'+l.map(function(m){return '<tr><td>'+esc(m.name)+'</td><td>'+esc(m.dose)+'</td><td>'+t12(m.time)+'</td><td><button class="alt sm" data-del="'+m.id+'" aria-label="Delete '+esc(m.name)+'">Delete</button></td></tr>'}).join('')+'</table>':'<span class="mu">Nothing saved yet.</span>';
+ $('#wt').textContent=S.water+' of 8 glasses';$('#k1').textContent=t+'/'+l.length;$('#k2').textContent=S.water+'/8';$('#k3').textContent=S.feel==='good'?'Good':S.feel==='okay'?'Okay':S.feel==='bad'?'Not well':'-';var nx0=l.filter(function(m){return !m.taken})[0];$('#insight').textContent=(l.length?'You have taken '+t+' of '+l.length+' medicines today. '+(nx0?'Next: '+nx0.name+' at '+t12(nx0.time)+'.':'All done, well done!'):'Add your medicine reminders to get started.')+' Water: '+S.water+' of 8 glasses.';
+ $('#feel').textContent=S.feel==='good'?'Glad you are feeling good!':S.feel==='okay'?'Take it easy and drink some water.':S.feel==='bad'?'Ask the companion or use SOS if serious.':'';
+ $('#fn').value=S.fam.n;$('#fp2').value=S.fam.p;var c=$('#fc');c.hidden=!S.fam.p;if(S.fam.p){c.href='tel:'+S.fam.p;c.textContent='Call '+(S.fam.n||'family')}
+ alerts()}
+
+/* medicines */
+function vm(){var n=$('#mn').value.trim(),d=$('#md').value.trim(),t=$('#mt').value;
+ var a=n?'':'Please enter the medicine name',b=d?'':'Please enter the dosage',c=t?'':'Please choose a time';
+ $('#mne').textContent=a;$('#mn').classList.toggle('bad',!!a);$('#mde').textContent=b;$('#md').classList.toggle('bad',!!b);$('#mte').textContent=c;$('#mt').classList.toggle('bad',!!c);return !a&&!b&&!c}
+var mt=false;['#mn','#md','#mt'].forEach(function(s){$(s).oninput=function(){if(mt)vm()}});
+$('#ms').onclick=function(){mt=true;$('#mok').textContent='';if(!vm())return;var b=this,p=0;b.disabled=true;b.innerHTML='<span class="sp"></span> Saving Reminder...';$('#mpb').hidden=false;
+ var iv=setInterval(function(){p+=20;$('#mpi').style.width=p+'%';$('#mpt').textContent=p+'%';if(p>=100){clearInterval(iv);
+  var tm=$('#mt').value;S.meds.push({id:Date.now(),name:$('#mn').value.trim(),dose:$('#md').value.trim(),time:tm,taken:false});save();
+  $('#mok').textContent='\u2713 Reminder saved. We will remind you at '+t12(tm);
+  $('#mn').value=$('#md').value=$('#mt').value='';mt=false;['#mne','#mde','#mte'].forEach(function(s){$(s).textContent=''});['#mn','#md','#mt'].forEach(function(s){$(s).classList.remove('bad')});
+  b.disabled=false;b.textContent='Save Reminder';setTimeout(function(){$('#mpb').hidden=true;$('#mpi').style.width=0},900);draw()}},250)};
+var fired={};
+setInterval(function(){var n=hm();S.meds.forEach(function(m){var k=m.id+day;if(!m.taken&&m.time===n&&!fired[k]&&!$('#home').hidden){fired[k]=1;var s='Time to take your '+m.name+', '+m.dose;toast(s);speak(s)}});alerts()},15000);
+
+/* SOS */
+var hs=0,hr=0;
+function setHold(){var p=Math.min(100,(Date.now()-hs)/30);$('#hold').style.width=p+'%';if(p>=100){stopHold();fire()}else hr=requestAnimationFrame(setHold)}
+function startHold(){if(hs)return;hs=Date.now();hr=requestAnimationFrame(setHold)}
+function stopHold(){cancelAnimationFrame(hr);hs=0;$('#hold').style.width=0}
+var sb=$('#sos');sb.addEventListener('pointerdown',function(e){e.preventDefault();startHold()});
+['pointerup','pointerleave','pointercancel'].forEach(function(ev){sb.addEventListener(ev,stopHold)});
+sb.addEventListener('keydown',function(e){if((e.key===' '||e.key==='Enter')&&!e.repeat){e.preventDefault();startHold()}});sb.addEventListener('keyup',stopHold);
+$('#sosNow').onclick=fire;
+function fire(){$('#sIdle').hidden=true;$('#sDone').hidden=true;$('#sLoad').hidden=false;
+ var st=['Getting your location','Sending message to '+(S.fam.n||'family'),'Calling contact'];
+ $('#steps').innerHTML=st.map(function(s,j){return '<div id="st'+j+'">&bull; '+esc(s)+'</div>'}).join('');
+ st.forEach(function(s,j){setTimeout(function(){var e=$('#st'+j);if(e){e.className='done';e.innerHTML='&#10003; '+esc(s)}},900*(j+1))});
+ setTimeout(function(){$('#sLoad').hidden=true;$('#sDone').hidden=false;S.log.push({x:'SOS sent (demo) at '+t12(hm())});save();alerts()},900*4)}
+$('#sosAgain').onclick=function(){$('#sDone').hidden=true;$('#sIdle').hidden=false};
+$('#fs').onclick=function(){var p=$('#fp2').value.replace(/\s/g,''),ok=/^\d{10}$/.test(p);$('#fe').textContent=ok?'':'Enter a valid 10-digit number';$('#fp2').classList.toggle('bad',!ok);
+ if(ok){S.fam={n:$('#fn').value.trim(),p:p};save();$('#fe').className='msg ok';$('#fe').textContent='\u2713 Contact saved';draw();setTimeout(function(){$('#fe').className='msg';$('#fe').textContent=''},2000)}else $('#fe').className='msg'};
+
+/* alerts */
+function alerts(){var n=hm(),items=[];
+ S.meds.forEach(function(m){if(!m.taken&&m.time<n)items.push({k:'m'+m.id,c:'er',h:'Missed medicine',x:m.name+' ('+m.dose+') was due at '+t12(m.time)})});
+ S.log.forEach(function(l,i){items.push({k:'l'+i,c:'er',h:'SOS',x:l.x})});
+ items=items.filter(function(a){return S.dis.indexOf(a.k+day)<0});
+ var b=$('#bdg');b.hidden=!items.length;b.textContent=items.length;
+ $('#alist').innerHTML=items.map(function(a){return '<div class="card al"><svg class="tri" viewBox="0 0 24 24" style="color:var(--'+a.c+')"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18v.5"/></svg><div style="flex:1"><b>'+a.h+'</b><div>'+esc(a.x)+'</div></div><button class="alt sm" data-dis="'+a.k+'">Dismiss</button></div>'}).join('')||'<div class="card">No alerts. All good!</div>'}
+
+/* health companion (AI) */
+var H=[],busy=false,samp=null,RED=/chest pain|can.?t breathe|cannot breathe|trouble breathing|short of breath|stroke|face droop|slurred|faint|unconscious|collapsed|severe bleeding|heart attack|suicid|want to die|fell down|i fell|overdose|very confused/i;
+['Why do my knees hurt?','What should I eat today?','Tips for better sleep','I feel dizzy'].forEach(function(q){var b=document.createElement('button');b.className='alt sm';b.textContent=q;b.onclick=function(){ask(q)};$('#chips').appendChild(b)});
+function bub(t,c){var d=document.createElement('div');d.className='bub '+c;d.textContent=t;$('#log').appendChild(d);d.scrollIntoView({block:'nearest'});return d}
+function getSample(){if(samp)return samp;samp=(window.claude&&claude.use?claude.use('sample'):Promise.resolve(null)).catch(function(){return null});return samp}
+function local(q){q=q.toLowerCase();var l=sorted(),nx=l.filter(function(m){return !m.taken})[0];
+ if(/medic|tablet|pill|next/.test(q))return nx?'Your next medicine is '+nx.name+' ('+nx.dose+') at '+t12(nx.time)+'.':'You have taken all your medicines today. Well done!';
+ if(/water|drink/.test(q))return 'Try to drink about 6 to 8 glasses of water a day unless your doctor has told you otherwise. You have had '+S.water+' today.';
+ return 'I cannot reach the smart assistant right now. Please try again in a moment, or ask your doctor or family. For serious symptoms call 112.'}
+function prompt(q){var l=sorted().map(function(m){return m.name+' '+m.dose+' at '+t12(m.time)+(m.taken?' (taken)':' (not yet taken)')}).join('; ');
+ return 'You are a warm, patient health companion for an elderly person in India. Write in very simple short sentences, at most 120 words, in plain text with no markdown, asterisks or tables. Use short numbered lines for steps. Answer any health, nutrition, sleep, exercise, pain, mood, hydration or medicine-timing question with helpful general information. Never diagnose and never change prescribed doses. If a symptom could be serious (chest pain, breathing trouble, stroke signs, fainting, a fall with injury, sudden confusion, heavy bleeding, thoughts of self-harm), begin by telling them to press SOS or call 112 now. When useful, end with one gentle line suggesting they check with their doctor. Be kind and reassuring.\n\nContext: today is '+new Date().toDateString()+'. Their name is '+(S.name||'unknown')+'. Medicines today: '+(l||'none')+'. Water so far: '+S.water+' glasses.\n\nConversation so far:\n'+H.slice(-8).map(function(m){return (m.u?'Person: ':'You: ')+m.t}).join('\n')+'\n\nPerson: '+q+'\nYou:'}
+function ask(q){q=(q||'').trim();if(!q||busy)return;busy=true;$('#ci').value='';bub(q,'me');
+ if(RED.test(q)){var w=bub('This may be serious. Press SOS or call 112 right now.','bot warn');var a=document.createElement('div');a.className='row';a.style.marginTop='8px';a.innerHTML='<button class="danger sm" data-go="sos">Open SOS</button><a class="btn danger sm" href="tel:112" style="width:auto">Call 112</a>';w.appendChild(a)}
+ var b=bub('','bot');b.innerHTML='<span class="sp"></span> Thinking...';
+ getSample().then(function(sm){
+  if(!sm)return local(q);
+  return sm(prompt(q),{cache:false,onText:function(r){b.textContent=r.text}}).then(function(r){return r.text||local(q)})})
+ .catch(function(e){return e&&e.code==='not_granted'?'I need your permission to answer. Please send your question again and tap Allow.':e&&e.code==='rate_limited'?'Too many questions at once. Please wait a moment and ask again.':local(q)})
+ .then(function(t){b.textContent=t;H.push({u:1,t:q},{u:0,t:t});if($('#rd').checked)speak(t)})
+ .then(function(){busy=false});}
+$('#cs').onclick=function(){ask($('#ci').value)};$('#ci').onkeydown=function(e){if(e.key==='Enter')ask(this.value)};
+var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+if(!SR)$('#mic').hidden=true;else $('#mic').onclick=function(){try{var rc=new SR();rc.lang='en-IN';rc.onresult=function(e){$('#ci').value=e.results[0][0].transcript;ask($('#ci').value)};rc.start();this.textContent='Listening...';var s=this;rc.onend=function(){s.textContent='Speak'}}catch(e){}};
+
+
+var reg=false;
+function setMode(r){reg=r;$('#nmw').hidden=!r;$('#lg').textContent=r?'Register':'Login';$$('.tab').forEach(function(t){t.classList.toggle('on',(t.dataset.tab==='reg')===r)});['#nme','#pe','#ne'].forEach(function(s){$(s).textContent=''});touched=false}
+$$('.tab').forEach(function(t){t.onclick=function(){setMode(t.dataset.tab==='reg')}});
+$('#toReg').onclick=function(){setMode(true)};
+$('#eye').onclick=function(){var p=$('#pin');p.type=p.type==='password'?'text':'password'};
+$('#forgot').onclick=function(){toast('Demo: a PIN reset link would be sent to your mobile.')};
+$('#goog').onclick=function(){toast('Google sign-in is not available in this demo.')};
+if(S.user)enter();
+})();
+</script>
+</body>
+</html>
